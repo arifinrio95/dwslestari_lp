@@ -1115,8 +1115,107 @@ footer {
     color: #888;
 }
 
-/* Responsive */
+/* =========================================
+   Brand Partners Marquee
+   ========================================= */
+.brand-partners {
+    padding: 2rem 0 4rem;
+    background: var(--bg-color);
+    overflow: hidden;
+    position: relative;
+}
+
+.brand-partners .section-label {
+    text-align: center;
+    font-family: var(--font-handwriting);
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+.marquee-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    animation: scrollRight 40s linear infinite;
+}
+
+.brand-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.brand-item:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+.brand-item img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    transition: all 0.3s ease;
+}
+
+.brand-item:hover img {
+    filter: grayscale(0%);
+}
+
+.brand-item span {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    letter-spacing: 0.5px;
+}
+
+@keyframes scrollRight {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
 @media (max-width: 768px) {
+
+    /* Marquee Responsive */
+    .marquee-track {
+        gap: 2rem;
+        animation-duration: 20s;
+    }
+
+    .brand-item img {
+        height: 40px;
+    }
+
+    .brand-item span {
+        font-size: 0.8rem;
+    }
+
+    /* Existing Responsive Styles */
     .services-grid.revamped {
         gap: 20px;
     }
@@ -1138,12 +1237,8 @@ footer {
         font-size: 0.9rem;
     }
 
-    /* Split Hero Responsive */
     .hero-split {
         padding: 160px 0 60px;
-        /* Further increased to clear subtitle */
-        min-height: auto;
-        text-align: center;
     }
 
     .split-container {
@@ -1191,7 +1286,6 @@ footer {
         left: -10%;
     }
 
-    /* Nav */
     .nav-container {
         flex-direction: column;
         gap: 15px;
@@ -1208,7 +1302,6 @@ footer {
         height: 50px;
     }
 
-    /* Contact Responsive */
     .contact-wrapper {
         padding: 40px 20px;
         width: 90%;
