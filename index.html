@@ -272,14 +272,14 @@
                     <h3>Paket IG Reels & Story</h3>
                     <p class="package-includes">Video Creation + IG Reels + IG Story</p>
                     <div class="price-container">
-                        <span class="price-strike">IDR 2.500K</span>
-                        <div class="price-tag">IDR 600K</div>
+                        <span class="price-strike">IDR 3.5 Juta</span>
+                        <div class="price-tag">IDR 800K</div>
                     </div>
                 </div>
 
                 <!-- Package 2: Video Creation + Owning Content -->
                 <div class="service-card package-card" id="card-package2" onclick="selectPackage('package2')">
-                    <div class="card-badge">Hemat 73%</div>
+                    <div class="card-badge">Hemat 81%</div>
                     <div class="card-icon">
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#A68B7C" stroke-width="1.5"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -291,8 +291,8 @@
                     <h3>Paket Owning Content Only</h3>
                     <p class="package-includes">Video Creation + Owning Content</p>
                     <div class="price-container">
-                        <span class="price-strike">IDR 3.000K</span>
-                        <div class="price-tag">IDR 900K</div>
+                        <span class="price-strike">IDR 5.5 Juta</span>
+                        <div class="price-tag">IDR 1 Juta</div>
                     </div>
                 </div>
 
@@ -310,8 +310,8 @@
                     <h3>Paket Lengkap</h3>
                     <p class="package-includes">Video Creation + IG Reels + IG Story + Owning Content</p>
                     <div class="price-container">
-                        <span class="price-strike">IDR 5.500K</span>
-                        <div class="price-tag">IDR 1.400K</div>
+                        <span class="price-strike">IDR 6.5 Juta</span>
+                        <div class="price-tag">IDR 1.8 Juta</div>
                     </div>
                 </div>
             </div>
@@ -350,10 +350,10 @@
 
                 <div class="simulation-row total">
                     <span>Total:</span>
-                    <span class="sim-total" id="total-promo">IDR 600K</span>
+                    <span class="sim-total" id="total-promo">IDR 800K</span>
                 </div>
                 <div class="simulation-savings">
-                    Hemat: <span id="total-saved">IDR 1.900K</span>
+                    Hemat: <span id="total-saved">IDR 2.7 Juta</span>
                 </div>
                 <a href="#" onclick="sendWhatsApp(event)" class="btn btn-primary btn-block">Ambil Promo Sekarang</a>
             </div>
@@ -540,34 +540,32 @@
                 name: "Paket IG Reels & Story",
                 hasIGReels: true,
                 items: [
-                    { name: "Video Creation", normal: 2500000, promo: 600000 },
-                    { name: "IG Reels", normal: 0, promo: 0 },
-                    { name: "IG Story", normal: 0, promo: 0 }
+                    { name: "Video Creation", normal: 2500000, promo: 0 },
+                    { name: "Upload IG Reels & Story", normal: 1000000, promo: 800000 }
                 ],
-                totalNormal: 2500000,
-                totalPromo: 600000
+                totalNormal: 3500000,
+                totalPromo: 800000
             },
             package2: {
                 name: "Paket Owning Content Only",
                 hasIGReels: false,
                 items: [
-                    { name: "Video Creation", normal: 2500000, promo: 600000 },
-                    { name: "Owning Content", normal: 3000000, promo: 900000 }
+                    { name: "Video Creation", normal: 2500000, promo: 0 },
+                    { name: "Owning Content", normal: 3000000, promo: 1000000 }
                 ],
-                totalNormal: 3000000,
-                totalPromo: 900000
+                totalNormal: 5500000,
+                totalPromo: 1000000
             },
             package3: {
                 name: "Paket Lengkap",
                 hasIGReels: true,
                 items: [
-                    { name: "Video Creation", normal: 2500000, promo: 600000 },
-                    { name: "IG Reels", normal: 0, promo: 0 },
-                    { name: "IG Story", normal: 0, promo: 0 },
-                    { name: "Owning Content", normal: 3000000, promo: 900000 }
+                    { name: "Video Creation", normal: 2500000, promo: 0 },
+                    { name: "Owning Content", normal: 3000000, promo: 1000000 },
+                    { name: "Upload IG Reels & Story", normal: 1000000, promo: 800000 }
                 ],
-                totalNormal: 5500000,
-                totalPromo: 1400000
+                totalNormal: 6500000,
+                totalPromo: 1800000
             }
         };
 
@@ -673,6 +671,7 @@
         }
 
         function formatCurrency(amount) {
+            if (amount === 0) return 'FREE';
             if (amount >= 1000000) {
                 return 'IDR ' + (amount / 1000000).toFixed(1).replace('.0', '') + ' Juta';
             }
