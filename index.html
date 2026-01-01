@@ -193,7 +193,8 @@
                     </div>
                     <div class="price-display">
                         <span class="currency">IDR</span>
-                        <span class="amount">1800K</span>
+                        <span class="amount">1600K</span>
+                        <span class="strike" style="color: #FF3B30; text-decoration-color: #FF3B30;">1.8jt</span>
                         <span class="strike">6.5jt</span>
                     </div>
                     <ul class="feature-list">
@@ -362,7 +363,7 @@
                     { name: "Upload IG Reels & Story", normal: 1000000, promo: 800000 }
                 ],
                 totalNormal: 6500000,
-                totalPromo: 1800000
+                totalPromo: 1600000
             }
         };
 
@@ -400,21 +401,31 @@
             breakdownContainer.innerHTML = '';
 
             let totalNormal = pkg.totalNormal;
-            let totalPromo = pkg.totalPromo;
+            let totalPromo = pkg.totalPromo; // logic value
+
+            // Logic for visual sum (before extra bundle discount)
+            let visualSumPromo = 0;
 
             pkg.items.forEach(item => {
+                visualSumPromo += item.promo;
                 if (item.promo === 0 && item.normal > 0) {
                     // Free item
                     breakdownContainer.innerHTML += `
                         <div class="dash-row">
                             <span>${item.name}</span>
-                            <span>FREE <span class="dash-strike">${formatCurrency(item.normal)}</span></span>
+                            <div style="text-align: right;">
+                                <span>FREE</span><br>
+                                <span class="dash-strike" style="font-size: 0.8em; color: #666;">${formatCurrency(item.normal)}</span>
+                            </div>
                         </div>`;
                 } else if (item.promo > 0) {
                     breakdownContainer.innerHTML += `
                         <div class="dash-row">
                             <span>${item.name}</span>
-                            <span>${formatCurrency(item.promo)}</span>
+                            <div style="text-align: right;">
+                                <span>${formatCurrency(item.promo)}</span><br>
+                                <span class="dash-strike" style="font-size: 0.8em; color: #666;">${formatCurrency(item.normal)}</span>
+                            </div>
                         </div>`;
                 }
             });
@@ -422,15 +433,38 @@
             if (tiktokAddonEnabled) {
                 totalNormal += tiktokAddon.normal;
                 totalPromo += tiktokAddon.promo;
+                visualSumPromo += tiktokAddon.promo;
                 breakdownContainer.innerHTML += `
                         <div class="dash-row addon-active">
                             <span>${tiktokAddon.name}</span>
-                            <span>${formatCurrency(tiktokAddon.promo)}</span>
+                            <div style="text-align: right;">
+                                <span>${formatCurrency(tiktokAddon.promo)}</span><br>
+                                <span class="dash-strike" style="font-size: 0.8em; color: #666;">${formatCurrency(tiktokAddon.normal)}</span>
+                            </div>
                         </div>`;
             }
 
-            document.getElementById('total-promo').textContent = formatCurrency(totalPromo);
-            document.getElementById('total-saved').textContent = formatCurrency(totalNormal - totalPromo);
+            // Special Display for Package 3
+            if (selectedPackage === 'package3') {
+                // Force total promo to 1.6jt if no addon 
+                // If addon is on, we add addon price to the 1.6 base
+                let baseTotal = 1600000;
+                let strikeTotal = 1800000;
+
+                if (tiktokAddonEnabled) {
+                    baseTotal += tiktokAddon.promo;
+                    strikeTotal += tiktokAddon.promo;
+                }
+
+                document.getElementById('total-promo').innerHTML = `
+                    <span style="display:block; font-size: 0.7em; text-decoration: line-through; color: #FF3B30;">${formatCurrency(strikeTotal)}</span>
+                    ${formatCurrency(baseTotal)}
+                `;
+            } else {
+                document.getElementById('total-promo').textContent = formatCurrency(totalPromo);
+            }
+
+            document.getElementById('total-saved').textContent = formatCurrency(totalNormal - (selectedPackage === 'package3' ? 1600000 + (tiktokAddonEnabled ? 200000 : 0) : totalPromo));
         }
 
         function formatCurrency(amount) {
