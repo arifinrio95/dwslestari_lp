@@ -693,17 +693,30 @@ a {
 }
 
 
-/* Addon */
-.addon-row {
+/* Addons Grid */
+.addons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+}
+
+.addon-row-mini {
     background: #fff;
-    border-radius: 24px;
-    padding: 24px 32px;
+    border-radius: 20px;
+    padding: 20px;
     display: flex;
     align-items: center;
-    gap: 24px;
-    max-width: 600px;
-    margin: 0 auto 60px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    gap: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: transform 0.2s;
+}
+
+.addon-row-mini:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .addon-toggle input {
@@ -711,8 +724,8 @@ a {
 }
 
 .addon-toggle label {
-    width: 50px;
-    height: 30px;
+    width: 44px;
+    height: 26px;
     background: #ddd;
     border-radius: 30px;
     display: block;
@@ -726,12 +739,11 @@ a {
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     background: white;
     border-radius: 50%;
     transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .addon-toggle input:checked+label {
@@ -739,7 +751,17 @@ a {
 }
 
 .addon-toggle input:checked+label::after {
-    transform: translateX(20px);
+    transform: translateX(18px);
+}
+
+.addon-info h4 {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+}
+
+.addon-info p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 

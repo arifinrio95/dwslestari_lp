@@ -155,7 +155,7 @@
                     </div>
                     <div class="price-display">
                         <span class="currency">IDR</span>
-                        <span class="amount">800K</span>
+                        <span class="amount">1M</span>
                         <span class="strike">3.5jt</span>
                     </div>
                     <ul class="feature-list">
@@ -170,11 +170,11 @@
                 <div class="price-column" id="card-package2" onclick="selectPackage('package2')">
                     <div class="col-head">
                         <span class="col-badge">Business</span>
-                        <h3>Owning Content</h3>
+                        <h3>Owning Content + 2 Thumbnail</h3>
                     </div>
                     <div class="price-display">
                         <span class="currency">IDR</span>
-                        <span class="amount">1000K</span>
+                        <span class="amount">1.2M</span>
                         <span class="strike">5.5jt</span>
                     </div>
                     <ul class="feature-list">
@@ -193,8 +193,7 @@
                     </div>
                     <div class="price-display">
                         <span class="currency">IDR</span>
-                        <span class="amount">1600K</span>
-                        <span class="strike" style="color: #FF3B30; text-decoration-color: #FF3B30;">1.8jt</span>
+                        <span class="amount">2M</span>
                         <span class="strike">6.5jt</span>
                     </div>
                     <ul class="feature-list">
@@ -206,16 +205,50 @@
                 </div>
             </div>
 
-            <!-- Addon Row -->
-            <div class="addon-row" id="tiktok-addon-section">
-                <div class="addon-toggle">
-                    <input type="checkbox" id="tiktok-addon" onchange="toggleTikTokAddon()">
-                    <label for="tiktok-addon"></label>
+            <!-- Service Details & Addons -->
+            <div class="pricing-header" style="margin-top: 80px; margin-bottom: 40px;">
+                <p style="font-weight: 600; color: var(--text-main);">Videonya no voice over, cinematic style, no in frame.</p>
+                <p>Kalau mau tambahan seperti di atas ada pilihan add ons:</p>
+            </div>
+
+            <div class="addons-grid">
+                <!-- Voice Over -->
+                <div class="addon-row-mini">
+                    <div class="addon-toggle">
+                        <input type="checkbox" id="addon-voiceover" onchange="calculateTotal()">
+                        <label for="addon-voiceover"></label>
+                    </div>
+                    <div class="addon-info">
+                        <h4>Voice Over</h4>
+                        <p>+ IDR 100K</p>
+                    </div>
                 </div>
-                <div class="addon-info">
-                    <h4>Add TikTok Mirroring</h4>
-                    <p>Re-upload content to TikTok platform (+ IDR 200K)</p>
+                <!-- In Frame -->
+                <div class="addon-row-mini">
+                    <div class="addon-toggle">
+                        <input type="checkbox" id="addon-inframe" onchange="calculateTotal()">
+                        <label for="addon-inframe"></label>
+                    </div>
+                    <div class="addon-info">
+                        <h4>In Frame</h4>
+                        <p>+ IDR 200K</p>
+                    </div>
                 </div>
+                <!-- Codeboost -->
+                <div class="addon-row-mini">
+                    <div class="addon-toggle">
+                        <input type="checkbox" id="addon-codeboost" onchange="calculateTotal()">
+                        <label for="addon-codeboost"></label>
+                    </div>
+                    <div class="addon-info">
+                        <h4>Codeboost</h4>
+                        <p>+ IDR 200K</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px; color: var(--accent-blue); font-weight: 600;">
+                Note: For bulking order, ada diskon!
             </div>
 
             <!-- Dashboard/Receipt -->
@@ -335,63 +368,42 @@
 
         const packages = {
             package1: {
-                name: "Paket IG Reels & Story",
-                hasIGReels: true,
+                name: "Paket Starter",
                 items: [
-                    { name: "Video Creation", normal: 2500000, promo: 0 },
-                    { name: "Upload IG Reels & Story", normal: 1000000, promo: 800000 }
+                    { name: "Starter Service", normal: 3500000, promo: 1000000 }
                 ],
                 totalNormal: 3500000,
-                totalPromo: 800000
-            },
-            package2: {
-                name: "Paket Owning Content Only",
-                hasIGReels: false,
-                items: [
-                    { name: "Video Creation", normal: 2500000, promo: 0 },
-                    { name: "Owning Content", normal: 3000000, promo: 1000000 }
-                ],
-                totalNormal: 5500000,
                 totalPromo: 1000000
             },
-            package3: {
-                name: "Paket Lengkap",
-                hasIGReels: true,
+            package2: {
+                name: "Paket Bisnis (Owning + 2 Thumbnail)",
                 items: [
-                    { name: "Video Creation", normal: 2500000, promo: 0 },
-                    { name: "Owning Content", normal: 3000000, promo: 1000000 },
-                    { name: "Upload IG Reels & Story", normal: 1000000, promo: 800000 }
+                    { name: "Owning Content", normal: 3500000, promo: 0 },
+                    { name: "2 Thumbnail Photos", normal: 2000000, promo: 1200000 }
+                ],
+                totalNormal: 5500000,
+                totalPromo: 1200000
+            },
+            package3: {
+                name: "Paket Full",
+                items: [
+                    { name: "Full Package Service", normal: 6500000, promo: 2000000 }
                 ],
                 totalNormal: 6500000,
-                totalPromo: 1600000
+                totalPromo: 2000000
             }
         };
 
-        const tiktokAddon = {
-            name: "Mirroring TikTok",
-            normal: 200000,
-            promo: 200000
+        const addons = {
+            voiceover: { name: "Voice Over", price: 100000 },
+            inframe: { name: "In Frame", price: 200000 },
+            codeboost: { name: "Codeboost", price: 200000 }
         };
 
         function selectPackage(packageId) {
             document.querySelectorAll('.price-column').forEach(card => card.classList.remove('active'));
             document.getElementById('card-' + packageId).classList.add('active');
             selectedPackage = packageId;
-
-            const pkg = packages[packageId];
-            const addonSection = document.getElementById('tiktok-addon-section');
-            if (pkg.hasIGReels) {
-                addonSection.style.display = 'flex';
-            } else {
-                addonSection.style.display = 'none';
-                tiktokAddonEnabled = false;
-                document.getElementById('tiktok-addon').checked = false;
-            }
-            calculateTotal();
-        }
-
-        function toggleTikTokAddon() {
-            tiktokAddonEnabled = document.getElementById('tiktok-addon').checked;
             calculateTotal();
         }
 
@@ -401,15 +413,10 @@
             breakdownContainer.innerHTML = '';
 
             let totalNormal = pkg.totalNormal;
-            let totalPromo = pkg.totalPromo; // logic value
-
-            // Logic for visual sum (before extra bundle discount)
-            let visualSumPromo = 0;
+            let totalPromo = pkg.totalPromo;
 
             pkg.items.forEach(item => {
-                visualSumPromo += item.promo;
                 if (item.promo === 0 && item.normal > 0) {
-                    // Free item
                     breakdownContainer.innerHTML += `
                         <div class="dash-row">
                             <span>${item.name}</span>
@@ -418,7 +425,7 @@
                                 <span class="dash-strike" style="font-size: 0.8em; color: #666;">${formatCurrency(item.normal)}</span>
                             </div>
                         </div>`;
-                } else if (item.promo > 0) {
+                } else {
                     breakdownContainer.innerHTML += `
                         <div class="dash-row">
                             <span>${item.name}</span>
@@ -430,41 +437,25 @@
                 }
             });
 
-            if (tiktokAddonEnabled) {
-                totalNormal += tiktokAddon.normal;
-                totalPromo += tiktokAddon.promo;
-                visualSumPromo += tiktokAddon.promo;
-                breakdownContainer.innerHTML += `
+            // Addons logic
+            Object.keys(addons).forEach(addonId => {
+                const isChecked = document.getElementById('addon-' + addonId).checked;
+                if (isChecked) {
+                    const addon = addons[addonId];
+                    totalNormal += addon.price;
+                    totalPromo += addon.price;
+                    breakdownContainer.innerHTML += `
                         <div class="dash-row addon-active">
-                            <span>${tiktokAddon.name}</span>
+                            <span>${addon.name}</span>
                             <div style="text-align: right;">
-                                <span>${formatCurrency(tiktokAddon.promo)}</span><br>
-                                <span class="dash-strike" style="font-size: 0.8em; color: #666;">${formatCurrency(tiktokAddon.normal)}</span>
+                                <span>${formatCurrency(addon.price)}</span>
                             </div>
                         </div>`;
-            }
-
-            // Special Display for Package 3
-            if (selectedPackage === 'package3') {
-                // Force total promo to 1.6jt if no addon 
-                // If addon is on, we add addon price to the 1.6 base
-                let baseTotal = 1600000;
-                let strikeTotal = 1800000;
-
-                if (tiktokAddonEnabled) {
-                    baseTotal += tiktokAddon.promo;
-                    strikeTotal += tiktokAddon.promo;
                 }
+            });
 
-                document.getElementById('total-promo').innerHTML = `
-                    <span style="display:block; font-size: 0.7em; text-decoration: line-through; color: #FF3B30;">${formatCurrency(strikeTotal)}</span>
-                    ${formatCurrency(baseTotal)}
-                `;
-            } else {
-                document.getElementById('total-promo').textContent = formatCurrency(totalPromo);
-            }
-
-            document.getElementById('total-saved').textContent = formatCurrency(totalNormal - (selectedPackage === 'package3' ? 1600000 + (tiktokAddonEnabled ? 200000 : 0) : totalPromo));
+            document.getElementById('total-promo').textContent = formatCurrency(totalPromo);
+            document.getElementById('total-saved').textContent = formatCurrency(totalNormal - totalPromo);
         }
 
         function formatCurrency(amount) {
@@ -478,7 +469,13 @@
             const pkg = packages[selectedPackage];
             let message = "Halo Kak Dwi, saya ingin ambil: " + pkg.name + ":\n";
             let total = pkg.totalPromo;
-            if (tiktokAddonEnabled) total += tiktokAddon.promo;
+            Object.keys(addons).forEach(addonId => {
+                if (document.getElementById('addon-' + addonId).checked) {
+                    const addon = addons[addonId];
+                    message += "+ Add-on: " + addon.name + "\n";
+                    total += addon.price;
+                }
+            });
             message += "Total: " + formatCurrency(total);
             const url = `https://wa.me/6282236257792?text=${encodeURIComponent(message)}`;
             window.open(url, '_blank');
